@@ -16,11 +16,11 @@ key, _ := signkey.NewKey(signkey.UserKeyPrefix)
 // serialize the public key and secret
 // you need to keep the secret...secret!
 pubkeyStr, _ := key.PublicKey()
-secretBytes, _ := key.Secret()
+secretStr, _ := key.Secret()
 
 // deserialize to a new key instance using the secret
 // you can sign AND verify data
-key2, _ := signkey.FromSecret(secretBytes)
+key2, _ := signkey.FromSecret(secretStr)
 data := []byte("howdy partner")
 sig, _ := key2.Sign(data)
 err := key2.Verify(data, sig)
@@ -46,12 +46,12 @@ Both are serialized to base32 encoded string, i.e. 0-9, A-Z.
 
 Source of entropy
 -----------------
-NewKey method uses the system rand.Reader as its source of entropy. You can change that by 
+The NewKey method uses `rand.Reader` as its source of entropy. You can change that by 
 simply prepopulate the raw secret with your choice of random data. Just make sure it  
 is 32 bytes long.
 
 ```golang
-var rawSecret [32]byte
-_, err := io.ReadFull(rand.Reader, entropy[:]) // let's use rand.Reader as the source of entropy
+var rawSecret [signkey.SecretSize]byte
+_, err := io.ReadFull(rand.Reader, rawSecret[:])
 user, _ := signkey.FromRawSecret(UserKeyPrefix, rawSecret)
 ```

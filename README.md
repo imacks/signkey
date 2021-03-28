@@ -1,6 +1,6 @@
 SignKey
 =======
-PKI authentication based on [Ed25519](https://ed25519.cr.yp.to/).
+Signature verification based on [Ed25519](https://ed25519.cr.yp.to/).
 
 If you are interested in a CLI utility, go to the `signutil` directory.
 
@@ -46,7 +46,7 @@ Both are serialized to base32 encoded string, i.e. 0-9, A-Z.
 
 Source of entropy
 -----------------
-PopKey uses the system rand.Reader as its source of entropy. You can change that by 
+NewKey method uses the system rand.Reader as its source of entropy. You can change that by 
 simply prepopulate the raw secret with your choice of random data. Just make sure it  
 is 32 bytes long.
 

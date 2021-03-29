@@ -25,7 +25,7 @@ data := []byte("howdy partner")
 sig, _ := key2.Sign(data)
 err := key2.Verify(data, sig)
 
-// now image your friend knows your public key.
+// now imagine your friend knows your public key.
 // we pass sig and data to your friend...
 
 // deserialize to a new key using the public key.
@@ -41,17 +41,17 @@ if signkey.IsInvalidSignature(err3) {
 
 Public key and secret
 ---------------------
-Both are serialized to base32 encoded string, i.e. 0-9, A-Z.
+Both are serialized to base32 encoded string (2-7, A-Z).
 
 
 Source of entropy
 -----------------
-The NewKey method uses `rand.Reader` as its source of entropy. You can change that by 
-simply prepopulate the raw secret with your choice of random data. Just make sure it  
-is 32 bytes long.
+The NewKey method uses `rand.Reader` as its source of entropy. You can create a key 
+with custom entropy source by using FromRawSecret instead. Prepopulate the raw secret 
+with your random data that is 32 bytes long.
 
 ```golang
 var rawSecret [signkey.SecretSize]byte
 _, err := io.ReadFull(rand.Reader, rawSecret[:])
-user, _ := signkey.FromRawSecret(UserKeyPrefix, rawSecret)
+key, _ := signkey.FromRawSecret(UserKeyPrefix, rawSecret)
 ```
